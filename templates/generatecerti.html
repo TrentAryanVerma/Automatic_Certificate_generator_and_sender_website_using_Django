@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Certificate</title>
+    <link rel="stylesheet" href="/static/style1.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap">
+</head>
+<body class="certificategenerator">
+    <h1>Generate Certificate</h1>
+    <div class="container">
+        <h2>Create Certificate</h2>
+        <form class="form1" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-border">
+                <div id="label1">
+                    {{ form.template.label_tag }}
+                    {{ form.template }}
+                </div>
+                <div id="label1">
+                    {{ form.csvfile.label_tag }}
+                    {{ form.csvfile }}
+                </div>
+            </div>
+            <h3>Enter sender e-mail details</h3>
+            <div class="form-border">
+                <div id="label2">
+                    {{ form.sender_email.label_tag }}
+                    {{ form.sender_email }}
+                </div>
+                <div id="label3">
+                    {{ form.sender_password.label_tag }}
+                    {{ form.sender_password }}
+                </div>
+            </div>
+            <button id="button1" type="submit">Generate and Send Certificate</button>
+        </form>
+    </div>
+</body>
+</html>

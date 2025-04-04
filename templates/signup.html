@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/static/signup.css"> 
+</head>
+<body>
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true"/>
+        <div class="signup">
+            <form action="" method="post">
+                {% csrf_token %}
+                <label for="chk" aria-hidden="true">Sign up</label>
+                {% if message %}
+                    <p class="message">{{ message }}</p>
+                {% endif %}
+                <input type="text" name="First_name" placeholder="First Name" required=""/>
+                <input type="text" name="Last_name" placeholder="Last Name" required=""/>
+                <input type="text" name="User_name" placeholder="User Name" required=""/>
+                <input type="email" name="email" placeholder="Email" required=""/>
+                <input type="password" name="Password1" placeholder="Password" required=""/>
+                <input type="password" name="Password2" placeholder="Confirm Password" required=""/>
+                <button>Sign up</button>
+            </form>
+        </div>
+        <div class="login">
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <label for="chk" aria-hidden="true">Login</label>
+                <input type="text" name="User_name" placeholder="Username" required>
+                <input type="password" name="Password" placeholder="Password" required>
+                <button>Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
