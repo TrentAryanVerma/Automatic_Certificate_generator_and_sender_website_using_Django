@@ -15,21 +15,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from Certificate_generator import views
 from Certificate_generator import test
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('homepage/', views.homepage, name='homepage'),
-    path('', views.signup),
+    path('', views.signup, name='signup'),
     path('login/', views.login, name='login'),
-    path('generate_certificate/', views.generate_certificate),
+    path('generate_certificate/', views.generate_certificate, name='generate_certificate'),
     path('mail-status/', views.mail_status, name='mail_status'),
-
-    
-
-
-    
-    
+    path('create_event/', views.create_event, name='create_event'),
+    path('events/', views.event_list, name='event_list'),
+    path('participate/<int:event_id>/', views.participate_event, name='participate_event'),
+    path('event_participants/<int:event_id>/', views.event_participants, name='event_participants'),  # Add this line
+    path('delete/<int:event_id>/', views.delete_event, name='delete_event'),
+    path('user_profile_view/', views.user_profile_view, name='user_profile_view'),
+    path('api/', include('Certificate_generator.api.api_urls')),
 ]
+
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

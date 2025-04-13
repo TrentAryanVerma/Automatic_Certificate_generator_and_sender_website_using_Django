@@ -1,66 +1,82 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Home Page</title>
-	<link rel="stylesheet" type="text/css" href="/static/style2.CSS">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento - Event and Game Centre </title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
 </head>
-<body >
-    
-    
-	<div class="welcome">
-		<div class="container">
-			<!-- <div class="Search">
-				<input type="text" class="Search-box" placeholder="Search"/>
-				<button class="Search-button"></button>
+<body class="bg-gray-950 text-white">
+    <header class="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="{% url 'homepage' %}" class="flex items-center space-x-2">
+                <img src="/media/event_banners/eventologo.jpg" alt="Evento Logo" class="h-10 w-auto">
+                <span class="text-2xl font-bold text-white hidden sm:block">Evento</span>
+            </a>            
+            <div class="flex items-center gap-8"> <ul class="flex space-x-6 text-white font-medium">
+                    <li><a href="{% url 'homepage' %}" class="hover:text-blue-400">Home</a></li>
+                    <li><a href="{% url 'event_list' %}" class="hover:text-blue-400">Events</a></li>
+                    <li><a href="{% url 'generate_certificate' %}" class="hover:text-blue-400">Certificate Generation</a></li>
+                    <li><a href="{% url 'mail_status' %}" class="hover:text-blue-400">Certificate Status</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Contact Us</a></li>
+                </ul>
+                {% if user.is_authenticated %}
+                <div class="relative group inline-block text-left">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        {{ user.username }}
+                    </button>
+                    <div class="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 text-gray-800">
+                        <a href="{% url 'user_profile_view' %}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                        <a href="{% url 'signup' %}" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</button>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
 
-			</div> -->
-		<div class="Square">
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</div>
+    <main class="pt-32">
+        <section class="hero-section text-center">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Welcome to Evento</h1>
+                <p class="text-gray-300 text-lg mb-8">Your platform for amazing events.</p>
+                <a href="{% url 'create_event' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg">Create Event</a>
+            </div>
+        </section>
 
-		<div class="circle">
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</div>
-		
-		<div class="left-side">
-			
-			<div class="menu">
-			
-		    
-				<span>&#9776;</span>
-				<ul>
-					<li><a href="#how-to-use">How to Use</a></li>
-					<li><a href="/generate_certificate">Generate Certification</a></li>
-					<li><a href="/mail-status">Status</a></li>
-					<li><a href="/signup">LogOut</a></li>
-				</ul>
-			</div>
-			
-		</div>
-		<div class="right-side">
-			<!-- <div class="logo">
-				<img src="logo.png" alt="Company Logo">
-			</div> -->
-			<div class="nav">
-				<ul>
-					
-					<li><a href="#home">Home</a></li>
-					<li><a href="#about-us">About Us</a></li>
-					<li><a href="#contact-us">Contact Us</a></li>
-					<li><a href="/signup" class="signup-btn">Sign Up</a></li>
-				</ul>
-			</div>
-		</div>
-	 </div>
-  </div>	
+        <section class="event-section mt-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-2xl font-semibold mb-6 text-center">Upcoming Events</h2>
+                <div class="flex flex-wrap justify-center gap-8">
+                    {% for event in events|slice:":3" %}
+                    <div class="bg-white text-gray-900 rounded-lg shadow-md overflow-hidden max-w-[300px]">
+                        <img src="{{ event.banner.url }}" alt="{{ event.title }} Banner" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold">{{ event.title }}</h3>
+                            <p class="text-gray-700">Date: {{ event.date }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mt-6 text-center">
+                    <a href="{% url 'event_list' %}">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">View All</button>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-8 text-center mt-20">
+        <p>© 2025 Evento. Beta Version.</p>
+    </footer>
 </body>
 </html>
-
